@@ -30,7 +30,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		BC67F37C2D9983E700B75BA4 /* Eatzy */ = {
+		BCEBAB382D95A2670013C3E4 /* Eatzy */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Eatzy;
 			sourceTree = "<group>";
@@ -75,7 +75,7 @@
 		BCEBAB2D2D95A2670013C3E4 = {
 			isa = PBXGroup;
 			children = (
-				BC67F37C2D9983E700B75BA4 /* Eatzy */,
+				BCEBAB382D95A2670013C3E4 /* Eatzy */,
 				BCEBAB492D95A2690013C3E4 /* EatzyTests */,
 				BCEBAB532D95A2690013C3E4 /* EatzyUITests */,
 				BCEBAB372D95A2670013C3E4 /* Products */,
@@ -108,7 +108,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				BC67F37C2D9983E700B75BA4 /* Eatzy */,
+				BCEBAB382D95A2670013C3E4 /* Eatzy */,
 			);
 			name = Eatzy;
 			packageProductDependencies = (

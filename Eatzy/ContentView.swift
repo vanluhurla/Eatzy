@@ -1,5 +1,5 @@
 //
-//  RestaurantListView.swift
+//  ContentView.swift
 //  Eatzy
 //
 //  Created by Vanessa Lucena on 27/03/2025.
@@ -7,9 +7,7 @@
 
 import SwiftUI
 
-struct RestaurantListView: View {
-    @ObservedObject var viewModel: RestaurantListViewModel
-    
+struct ContentView: View {
     var body: some View {
         VStack {
             Image(systemName: "globe")
@@ -17,14 +15,10 @@ struct RestaurantListView: View {
                 .foregroundStyle(.tint)
             Text("Hello, world!")
         }
-        .task {
-            await viewModel.didSelectPostcode("ME99BW")
-        }
         .padding()
-
     }
 }
 
-//#Preview {
-//    RestaurantListView()
-//}
+#Preview {
+    ContentView()
+}

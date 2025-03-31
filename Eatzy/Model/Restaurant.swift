@@ -11,8 +11,7 @@ struct RestaurantList: Codable {
     let restaurants: [Restaurant]
 }
 
-struct Restaurant: Codable, Identifiable {
-    let id: String
+struct Restaurant: Codable {
     let name: String
     let cuisines: [Cuisine]
     let rating: Rating
