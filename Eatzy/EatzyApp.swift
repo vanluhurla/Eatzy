@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct EatzyApp: App {
+    
+    let restaurantProvider = RestaurantProvider()
+   
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RestaurantListView(viewModel: RestaurantListViewModel(restaurantProvider: restaurantProvider))
         }
     }
 }
