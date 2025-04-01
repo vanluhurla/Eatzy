@@ -14,7 +14,8 @@ extension Restaurant {
                    name: "Restaurant Name",
                    cuisines: [Cuisine(name: "Cuisine name")],
                    rating: Rating(count: 100, starRating: 4.5),
-                   address: Address(city: "City", firstLine: "First Line", postalCode: "Postcode"))
+                   address: Address(city: "City", firstLine: "First Line", postalCode: "Postcode"),
+                   logoUrl: "https://d30v2pzvrfyzpo.cloudfront.net/uk/images/restaurants/191316.gif")
     }
     
     static var mocks: [Restaurant] {
