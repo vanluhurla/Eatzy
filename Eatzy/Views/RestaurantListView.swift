@@ -9,39 +9,63 @@ import SwiftUI
 
 struct RestaurantListView: View {
     
+    struct Metrics {
+        static let medium: CGFloat = 12
+    }
+    
     @ObservedObject var viewModel: RestaurantListViewModel
     @State private var searchPostcode: String = ""
     
     var body: some View {
         VStack {
             SearchTextField(searchText: $searchPostcode)
-            restaurantList
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack(alignment: .leading, spacing: 0) {
+                    carouselHeader
+                    BestRatedCarousel(restaurants: viewModel.bestRatedRestaurants)
+                    listHeader
+                    restaurantList
+                }
+            }
         }
         .onAppear {
             Task {
                 await viewModel.didSelectPostcode("ME9 9BW")
             }
         }
-        .padding()
     }
     
-    var restaurantList: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            LazyVStack(spacing: 12) {
-                ForEach(viewModel.restaurants) { restaurant in
-                    RestaurantListCell(
-                        name: restaurant.name,
-                        firstLineAddress: restaurant.address.firstLine,
-                        city: restaurant.address.city,
-                        starRating: restaurant.rating.starRating,
-                        ratingCount: restaurant.rating.count,
-                        logoUrl: restaurant.logoUrl,
-                        cuisines: restaurant.cuisines.prefix(2).map { $0.name }
-                    )
-                }
-            }
-            .frame(maxWidth: .infinity)
+    private var carouselHeader: some View {
+        HStack {
+            Text("Best rated")
+                .font(.title)
+                .foregroundStyle(Color.theme.text)
+                .fontWeight(.bold)
         }
+        .padding(.top, Metrics.medium)
+        .padding(.horizontal, Metrics.medium)
+    }
+    
+    private var listHeader: some View {
+        HStack {
+            Text("Available in your area")
+                .font(.title)
+                .foregroundStyle(Color.theme.text)
+                .fontWeight(.bold)
+        }
+        .padding(.top, Metrics.medium)
+        .padding(.horizontal, Metrics.medium)
+    }
+    
+    private var restaurantList: some View {
+        LazyVStack(spacing: Metrics.medium) {
+            ForEach(viewModel.availableRestaurants) { restaurant in
+                RestaurantListCell(restaurant: restaurant
+                )
+            }
+        }
+        .padding(Metrics.medium)
+        .frame(maxWidth: .infinity)
     }
 }
 
