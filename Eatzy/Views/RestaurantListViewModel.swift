@@ -11,8 +11,9 @@ import SwiftUI
 @MainActor
 class RestaurantListViewModel: ObservableObject {
     
-    @Published var restaurants = [Restaurant]()
     @Published var error: Error?
+    @Published var bestRatedRestaurants = [Restaurant]()
+    @Published var availableRestaurants = [Restaurant]()
     
     private let restaurantProvider: RestaurantProviderProtocol
     private let restaurantLimit = "10"
@@ -24,9 +25,19 @@ class RestaurantListViewModel: ObservableObject {
     func didSelectPostcode(_ postcode: String) async {
         do {
             let fetchedRestaurants = try await restaurantProvider.getRestaurantList(postcode: postcode, limit: restaurantLimit)
-            self.restaurants = fetchedRestaurants
+            organiseRestaurants(fetchedRestaurants)
         } catch {
             self.error = error
         }
+    }
+}
+
+private extension RestaurantListViewModel {
+    func organiseRestaurants(_ restaurants: [Restaurant]) {
+        bestRatedRestaurants = restaurants
+            .sorted { $0.rating.starRating > $1.rating.starRating }
+            .prefix(3)
+            .map { $0 }
+        availableRestaurants = restaurants.filter { !bestRatedRestaurants.contains($0)}
     }
 }

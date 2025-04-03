@@ -9,6 +9,12 @@ import SwiftUI
 
 struct SearchTextField: View {
     
+    struct Metrics {
+        static let small: CGFloat = 6
+        static let medium: CGFloat = 12
+        static let height: CGFloat = 60
+    }
+    
     @Binding var searchText: String
     
     var body: some View {
@@ -30,12 +36,13 @@ struct SearchTextField: View {
             } label: {
                 SearchTextFieldButton(iconName: "location")
             }
-            .padding(.trailing, 5)
+            .padding(.trailing, Metrics.small)
         }
-        .frame(height: 60)
+        .frame(height: Metrics.height)
         .background(Color.theme.backgroundSecondary)
         .clipShape(Rectangle())
-        .cornerRadius(12)
+        .cornerRadius(Metrics.medium)
+        .padding(Metrics.medium)
     }
 }
 

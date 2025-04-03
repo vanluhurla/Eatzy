@@ -9,11 +9,9 @@ import SwiftUI
 
 struct ColourTheme {
     let accent = Color.accentColor
-    
     let backgroundPrimary = Color.backgroundPrimary
     let backgroundSecondary = Color.backgroundSecondary
     let searchIconBackground = Color.searchIconBackground
-    
     let text = Color.text
 }
 

@@ -10,77 +10,79 @@ import SwiftUI
 struct RestaurantListCell: View {
     
     struct Metrics {
-        static let horizontalSpacing: CGFloat = 12
-        static let verticalSpacing: CGFloat = 16
-        static let ratingSpacing: CGFloat = 4
-        static let cellCornerRadius: CGFloat = 12
+        static let small: CGFloat = 4
+        static let medium: CGFloat = 12
+        static let large: CGFloat = 16
+        static let radius: CGFloat = 12
         static let logoSize: CGFloat = 50
         static let logoCornerRadius: CGFloat = 8
     }
     
-    var name: String
-    var firstLineAddress: String
-    var city: String
-    var starRating: Double
-    var ratingCount: Int
-    var logoUrl: String
-    var cuisines: [String]
+    var restaurant: Restaurant
+    var cuisines: String {
+        restaurant.cuisines.prefix(2)
+            .map { $0.name }
+            .joined(separator: ", ")
+    }
     
     var body: some View {
-        HStack(alignment: .top, spacing: Metrics.horizontalSpacing) {
+        HStack(alignment: .top, spacing: Metrics.medium) {
             restaurantLogo
             restaurantDetails
             Spacer()
         }
-        .padding(.horizontal, Metrics.horizontalSpacing)
-        .padding(.vertical, Metrics.verticalSpacing)
+        .padding(.horizontal, Metrics.medium)
+        .padding(.vertical, Metrics.large)
         .background(Color.theme.backgroundSecondary)
-        .clipShape(.rect(cornerRadius: Metrics.cellCornerRadius))
+        .clipShape(.rect(cornerRadius: Metrics.radius))
     }
     
     var restaurantDetails: some View {
         VStack(alignment: .leading,
-               spacing: Metrics.verticalSpacing) {
-            restaurantName
-            restaurantAddress
+               spacing: Metrics.large) {
+            VStack(alignment: .leading,
+                   spacing: Metrics.small) {
+                restaurantName
+                restaurantAddress
+            }
             restaurantRating
         }
     }
     
     var restaurantName: some View {
-        Text(name)
+        Text(restaurant.name)
             .font(.headline)
             .lineLimit(2)
     }
     
     var restaurantAddress: some View {
-        Text(firstLineAddress + " - " + city)
+        Text(restaurant.address.firstLine + " - " + restaurant.address.city)
             .font(.subheadline)
             .lineLimit(2)
     }
     
     var restaurantRating: some View {
-        HStack(spacing: Metrics.ratingSpacing) {
+        HStack(spacing: Metrics.small) {
             Image(systemName: "star.fill")
                 .font(.subheadline)
                 .foregroundStyle(Color.theme.accent)
             
-            Text(String(starRating))
+            Text(String(restaurant.rating.starRating))
                 .font(.subheadline)
                 .fontWeight(.medium)
             
-            Text("(\(ratingCount))")
+            Text("(\(restaurant.rating.count))")
                 .font(.subheadline)
                 .fontWeight(.light)
-
-            Text("• \(cuisines.joined(separator: ", "))")
+            
+            Text("• \(cuisines)")
                 .font(.system(size: 12))
         }
     }
     
     var restaurantLogo: some View {
         VStack {
-            AsyncImage(url: URL(string:logoUrl)) { image in
+            AsyncImage(url: URL(string:restaurant.logoUrl)) { image in
                 image.resizable()
             } placeholder: {
                 ProgressView()
@@ -94,18 +96,7 @@ struct RestaurantListCell: View {
 struct RestaurantListCell_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            RestaurantListCell(
-                name: "McDonald's® - Sittingbourne McDelivery Kitchen",
-                firstLineAddress: "Unit 2, Crown Quay Trade Centre\r\nEurolink Way",
-                city: "Sittingbourne",
-                starRating: 4.5,
-                ratingCount: 230,
-                logoUrl: "https://d30v2pzvrfyzpo.cloudfront.net/uk/images/restaurants/191316.gif",
-                cuisines: [
-                    "Burgers",
-                    "Chicken"
-                ]
-            )
+            RestaurantListCell(restaurant: Restaurant.previewMock)
         }
         .padding()
     }

@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct Cuisine: Codable {
+struct Cuisine: Codable, Equatable {
     let name: String
 }
