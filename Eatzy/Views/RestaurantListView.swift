@@ -19,18 +19,20 @@ struct RestaurantListView: View {
     var body: some View {
         VStack {
             SearchTextField(searchText: $searchPostcode)
-            ScrollView(.vertical, showsIndicators: false) {
-                VStack(alignment: .leading, spacing: 0) {
-                    carouselHeader
-                    BestRatedCarousel(restaurants: viewModel.bestRatedRestaurants)
-                    listHeader
-                    restaurantList
+            if viewModel.error != nil {
+                PlaceholderAnimation(text: "Oops! Something went wrong.\nCheck your postcode and try again.")
+            } else if
+                viewModel.shouldDisplayPlaceholder {
+                PlaceholderAnimation(text: "Search by postcode or location")
+            } else {
+                ScrollView(.vertical, showsIndicators: false) {
+                    VStack(alignment: .leading, spacing: 0) {
+                        carouselHeader
+                        BestRatedCarousel(restaurants: viewModel.bestRatedRestaurants)
+                        listHeader
+                        restaurantList
+                    }
                 }
-            }
-        }
-        .onAppear {
-            Task {
-                await viewModel.didSelectPostcode("ME9 9BW")
             }
         }
     }

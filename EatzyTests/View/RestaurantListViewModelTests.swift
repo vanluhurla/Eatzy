@@ -67,4 +67,26 @@ struct RestaurantListViewModelTests {
         #expect(availableRestaurants.contains(bestRatedRestaurants[1]) == false)
         #expect(availableRestaurants.contains(bestRatedRestaurants[2]) == false)
     }
+    
+    @Test("Tests placeholder animation appearance when no postcode applied")
+    func placeholderAnimationOnScreen() async throws {
+        // Given
+        restaurantProvider.shouldReturnResults = false
+        // When
+        await sut.didSelectPostcode("Postcode")
+        // Then
+        #expect(sut.bestRatedRestaurants.count == 0)
+        #expect(sut.availableRestaurants.count == 0)
+        #expect(sut.shouldDisplayPlaceholder == true)
+    }
+    
+    @Test("Tests hidden placeholder when postcode applied")
+    func hiddenPlaceholderAnimation() async throws {
+        // When
+        await sut.didSelectPostcode("Postcode")
+        // Then
+        #expect(sut.bestRatedRestaurants.count == 3)
+        #expect(sut.availableRestaurants.count == 2)
+        #expect(sut.shouldDisplayPlaceholder == false)
+    }
 }
