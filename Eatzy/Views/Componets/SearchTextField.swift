@@ -16,6 +16,9 @@ struct SearchTextField: View {
     }
     
     @Binding var searchText: String
+    @FocusState private var isTextFieldFocused: Bool
+
+    var onSearchTapped: (() -> Void)? = nil
     
     var body: some View {
         HStack {
@@ -23,11 +26,17 @@ struct SearchTextField: View {
                 .font(.system(size: 20)).bold()
                 .foregroundStyle(Color.theme.text)
                 .background(Color.theme.backgroundSecondary)
+                .focused($isTextFieldFocused)
                 .padding()
+                .submitLabel(.done)
+                .onSubmit {
+                    onSearchTapped?()
+                }
             
-            Button {
-                
-            } label: {
+            Button(action: {
+                isTextFieldFocused.toggle()
+                onSearchTapped?()
+            }) {
                 SearchTextFieldButton(iconName: "magnifyingglass")
             }
             

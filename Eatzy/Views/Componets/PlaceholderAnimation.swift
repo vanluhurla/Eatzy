@@ -11,10 +11,9 @@ import Lottie
 struct PlaceholderAnimation: View {
     
     struct Metrics {
-        static let negative: CGFloat = -50
         static let smallFrame: CGFloat = 200
         static let mediumFrame: CGFloat = 380
-        static let largeFrame: CGFloat = 400
+        static let containerPadding: CGFloat = 100
         static let textPadding: CGFloat = 30
     }
 
@@ -22,7 +21,7 @@ struct PlaceholderAnimation: View {
     
     var body: some View {
         VStack {
-            VStack(alignment: .center){
+            VStack(alignment: .center) {
                 LottieView(animation: .named("PlaceholderAnimation"))
                     .configure({ animationView in
                         animationView.contentMode = .scaleAspectFill
@@ -39,8 +38,7 @@ struct PlaceholderAnimation: View {
                     .multilineTextAlignment(.center)
                     .padding(.top, Metrics.textPadding)
             }
-            .frame(width: Metrics.largeFrame, height: Metrics.largeFrame)
-            .offset(y: Metrics.negative)
+            .padding(.bottom, Metrics.containerPadding)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
