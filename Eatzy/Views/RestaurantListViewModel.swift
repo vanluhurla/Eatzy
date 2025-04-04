@@ -28,6 +28,7 @@ class RestaurantListViewModel: ObservableObject {
         do {
             let fetchedRestaurants = try await restaurantProvider.getRestaurantList(postcode: postcode, limit: restaurantLimit)
             organiseRestaurants(fetchedRestaurants)
+            error = nil
         } catch {
             self.error = error
         }

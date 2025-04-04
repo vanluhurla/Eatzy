@@ -17,24 +17,39 @@ struct RestaurantListView: View {
     @State private var searchPostcode: String = ""
     
     var body: some View {
-        VStack {
-            SearchTextField(searchText: $searchPostcode)
-            if viewModel.error != nil {
-                PlaceholderAnimation(text: "Oops! Something went wrong.\nCheck your postcode and try again.")
-            } else if
-                viewModel.shouldDisplayPlaceholder {
-                PlaceholderAnimation(text: "Search by postcode or location")
-            } else {
-                ScrollView(.vertical, showsIndicators: false) {
-                    VStack(alignment: .leading, spacing: 0) {
-                        carouselHeader
-                        BestRatedCarousel(restaurants: viewModel.bestRatedRestaurants)
-                        listHeader
-                        restaurantList
+        ZStack{
+            Color.clear
+            VStack {
+                searchTextField
+                if viewModel.error != nil {
+                    PlaceholderAnimation(text: "Check your postcode and try again.")
+                } else if
+                    viewModel.shouldDisplayPlaceholder {
+                    PlaceholderAnimation(text: "Search by postcode or location.")
+                } else {
+                    ScrollView(.vertical, showsIndicators: false) {
+                        VStack(alignment: .leading, spacing: 0) {
+                            carouselHeader
+                            BestRatedCarousel(restaurants: viewModel.bestRatedRestaurants)
+                            listHeader
+                            restaurantList
+                        }
                     }
+                    .scrollDismissesKeyboard(.immediately)
                 }
             }
         }
+        .ignoresSafeArea(.keyboard)
+    }
+    
+    private var searchTextField: some View {
+        SearchTextField(searchText: $searchPostcode,
+            onSearchTapped: {
+                Task {
+                    await viewModel.didSelectPostcode(searchPostcode)
+                }
+            }
+        )
     }
     
     private var carouselHeader: some View {
