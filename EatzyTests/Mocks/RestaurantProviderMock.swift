@@ -11,12 +11,15 @@ import Foundation
 class RestaurantProviderMock: RestaurantProviderProtocol {
     
     var shouldThrowError: Bool = false
+    var shouldReturnResults: Bool = true
     
     func getRestaurantList(postcode: String, limit: String) async throws -> [Restaurant] {
         if shouldThrowError {
             throw NetworkError.invalidData
-        } else {
+        } else if shouldReturnResults {
             return Restaurant.mocks
+        } else {
+            return []
         }
     }
 }

@@ -38,7 +38,6 @@ struct SearchTextField: View {
             }
             .padding(.trailing, Metrics.small)
         }
-        .frame(height: Metrics.height)
         .background(Color.theme.backgroundSecondary)
         .clipShape(Rectangle())
         .cornerRadius(Metrics.medium)
