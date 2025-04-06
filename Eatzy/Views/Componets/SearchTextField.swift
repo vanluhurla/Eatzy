@@ -19,7 +19,7 @@ struct SearchTextField: View {
     @FocusState private var isTextFieldFocused: Bool
 
     var onSearchTapped: (() -> Void)? = nil
-    
+     
     var body: some View {
         HStack {
             TextField("Search", text: $searchText )
