@@ -77,8 +77,7 @@ struct RestaurantListView: View {
     private var restaurantList: some View {
         LazyVStack(spacing: Metrics.medium) {
             ForEach(viewModel.availableRestaurants) { restaurant in
-                RestaurantListCell(restaurant: restaurant
-                )
+                RestaurantListCell(restaurant: restaurant)
             }
         }
         .padding(Metrics.medium)
