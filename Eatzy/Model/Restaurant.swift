@@ -7,14 +7,15 @@
 
 import Foundation
 
-struct RestaurantList: Codable {
+struct RestaurantList: Codable, Equatable {
     let restaurants: [Restaurant]
 }
 
-struct Restaurant: Codable, Identifiable {
+struct Restaurant: Codable, Identifiable, Equatable {
     let id: String
     let name: String
     let cuisines: [Cuisine]
     let rating: Rating
     let address: Address
+    let logoUrl: String
 }
