@@ -23,7 +23,7 @@
 
 ## Installation
 
-You can download the latest installable version of LearnLoop for iOS:
+You can download the latest installable version of Eatzy for iOS:
 
 ```bash
  - Click on the <>Code button above; 
